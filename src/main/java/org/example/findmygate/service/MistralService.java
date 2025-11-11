@@ -1,6 +1,7 @@
 package org.example.findmygate.service;
 
 import org.example.findmygate.mistraldto.*;
+import org.example.findmygate.weatherdto.WeatherResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -24,7 +25,18 @@ public class MistralService {
     @Value("${open.mistral.api.key}")
     private String openapikey;
 
-    public Map<String, Object> promptMistral() {
+    public Map<String, Object> promptMistral(WeatherResponseDTO weatherResponse) {
+        String weatherSummary = String.format(
+                "In %s it's currently %d°C and %s.",
+                weatherResponse.getLocation().getName(),
+                weatherResponse.getCurrent().getTemperature(),
+                String.join(", ", weatherResponse.getCurrent().getWeatherDescriptions())
+        );
+
+        String userPrompt = "Generate a summary about: " + weatherSummary +
+                " Also, give packing advice based on this weather.";
+
+
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setModel("mistral-small-latest");
         requestDTO.setTemperature(1.0);
@@ -32,7 +44,7 @@ public class MistralService {
 
         List<Message> lstMessages = new ArrayList<>(); //en liste af messages med roller
         lstMessages.add(new Message("system", "You are a helpful assistant."));
-        lstMessages.add(new Message("user", "Give me the weatherforecast for my location and help me with what to pack"));
+        lstMessages.add(new Message("user", userPrompt));
         requestDTO.setMessages(lstMessages);
         ResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
