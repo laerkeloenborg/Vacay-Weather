@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 public class WeatherRequestDTO {
 
     private String query;
+
     @Value("${weather.api.key}")
     private String key;
 

@@ -3,6 +3,7 @@ package org.example.findmygate.service;
 import org.example.findmygate.weatherdto.WeatherRequestDTO;
 import org.example.findmygate.weatherdto.WeatherResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
