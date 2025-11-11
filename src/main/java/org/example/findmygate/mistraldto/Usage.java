@@ -1,5 +1,5 @@
 
-package org.example.findmygate.dto;
+package org.example.findmygate.mistraldto;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
