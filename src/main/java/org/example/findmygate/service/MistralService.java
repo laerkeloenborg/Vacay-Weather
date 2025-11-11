@@ -1,6 +1,6 @@
 package org.example.findmygate.service;
 
-import org.example.findmygate.dto.*;
+import org.example.findmygate.mistraldto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -32,7 +32,7 @@ public class MistralService {
 
         List<Message> lstMessages = new ArrayList<>(); //en liste af messages med roller
         lstMessages.add(new Message("system", "You are a helpful assistant."));
-        lstMessages.add(new Message("user", "Give me the gate number for my flight"));
+        lstMessages.add(new Message("user", "Give me the weatherforecast for my location and help me with what to pack"));
         requestDTO.setMessages(lstMessages);
         ResponseDTO response = webClient.post()
                 .contentType(MediaType.APPLICATION_JSON)
