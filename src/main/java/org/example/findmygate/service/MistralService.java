@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.reactive.function.client.WebClientException;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,13 +50,26 @@ public class MistralService {
         lstMessages.add(new Message("system", "You are a helpful assistant."));
         lstMessages.add(new Message("user", userPrompt));
         requestDTO.setMessages(lstMessages);
-        ResponseDTO response = webClient.post()
-                .contentType(MediaType.APPLICATION_JSON)
-                .headers(h -> h.setBearerAuth(openapikey))
-                .bodyValue(requestDTO)
-                .retrieve()
-                .bodyToMono(ResponseDTO.class)
-                .block();
+
+        ResponseDTO response;
+        try {
+            response = webClient.post()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .headers(h -> h.setBearerAuth(openapikey))
+                    .bodyValue(requestDTO)
+                    .retrieve()
+                    .bodyToMono(ResponseDTO.class)
+                    .block();
+        }catch(WebClientResponseException e){
+            Map<String, Object> errorMap = new HashMap<>();
+            errorMap.put("error", "Mistral API returned status " + e.getStatusCode());
+            errorMap.put("body", e.getResponseBodyAsString());
+            return errorMap;
+        }catch (Exception e){
+            Map<String, Object> errorMap = new HashMap<>();
+            errorMap.put("error", e.getMessage());
+            return errorMap;
+        }
 
         List<Choice> lst = response.getChoices();
         Usage usg = response.getUsage();
