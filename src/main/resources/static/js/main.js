@@ -54,4 +54,11 @@ document.addEventListener("DOMContentLoaded", () => {
             weatherSection.innerHTML = "<p>Something went wrong. Check console for details.</p>";
         }
     });
+
+    destinationInput.addEventListener("keypress", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            searchBtn.click();
+        }
+    });
 });
