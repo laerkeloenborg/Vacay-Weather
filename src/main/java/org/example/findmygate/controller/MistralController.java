@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -27,9 +28,14 @@ public class MistralController {
     }
 
     @GetMapping("/packinglist")
-    public Map<String, Object>packinglist(@RequestParam String location){
+    public Map<String, Object> packinglist(@RequestParam String location) {
         WeatherRequestDTO request = new WeatherRequestDTO(location, weatherKey);
-        WeatherResponseDTO response = weatherService.forecast(request).block();
-        return mistralService.promptMistral(response);
+        WeatherResponseDTO weatherResponse = weatherService.forecast(request).block();
+        Map<String, Object> mistralResponse = mistralService.promptMistral(weatherResponse);
+
+        Map<String, Object> result = new HashMap<>();
+        result.put("weather", weatherResponse);
+        result.put("ai", mistralResponse);
+        return result;
     }
 }

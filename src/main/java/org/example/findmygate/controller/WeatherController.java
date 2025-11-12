@@ -1,5 +1,6 @@
 package org.example.findmygate.controller;
 
+import org.example.findmygate.service.MistralService;
 import org.example.findmygate.service.WeatherService;
 import org.example.findmygate.weatherdto.WeatherRequestDTO;
 import org.example.findmygate.weatherdto.WeatherResponseDTO;
@@ -9,16 +10,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class WeatherController {
     private final WeatherService weatherService;
     private final String weatherkey;
+    private final MistralService mistralService;
 
     public WeatherController(WeatherService weatherService,
-                             @Value("${weather.api.key}")
-                             String weatherkey) {
+                             @Value("${weather.api.key}") String weatherkey,
+                             MistralService mistralService) {
         this.weatherService = weatherService;
         this.weatherkey = weatherkey;
+        this.mistralService = mistralService;
     }
 
     @GetMapping("/weathertest")
