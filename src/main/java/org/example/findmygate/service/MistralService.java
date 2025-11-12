@@ -34,8 +34,10 @@ public class MistralService {
         );
 
         String userPrompt = "Generate a summary about: " + weatherSummary +
-                " Also, give packing advice based on this weather.";
-
+                " Also, give packing advice based on this weather. Do not list in numbers and the text should not contain" +
+                "special letters nor signs" +
+                "I want headlines like, Layers, outerwear, sun protection and footwear" +
+                "remove this headline: Packing Advice";
 
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setModel("mistral-small-latest");
