@@ -5,16 +5,6 @@
     font-family: "segoe UI", sans-serif;
 }
 
-/*
-/* header with gradient todo: change for image ??
- header {
-    text-align: center;
-    background: linear-gradient(180deg, #0077d0, #f08519);
-    color: white;
-    padding: 2rem 1rem;
-}
- */
-
 .header {
     background-image: url('../images/vacayweather-header.png');
     background-size: cover;
