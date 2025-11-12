@@ -40,7 +40,7 @@ public class MistralService {
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setModel("mistral-small-latest");
         requestDTO.setTemperature(1.0);
-        requestDTO.setMaxTokens(200);
+        requestDTO.setMaxTokens(400);
 
         List<Message> lstMessages = new ArrayList<>(); //en liste af messages med roller
         lstMessages.add(new Message("system", "You are a helpful assistant."));
