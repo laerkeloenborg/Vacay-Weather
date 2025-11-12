@@ -12,7 +12,7 @@ searchBtn.addEventListener("click", async () => {
 
     try {
 
-        const response = await fetch("/api/weather", {
+        const response = await fetch("/packinglist", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ destination })
