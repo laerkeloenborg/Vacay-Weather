@@ -33,11 +33,12 @@ public class MistralService {
                 String.join(", ", weatherResponse.getCurrent().getWeatherDescriptions())
         );
 
-        String userPrompt = "Generate a summary about: " + weatherSummary +
+        String userPrompt = "Generate a summary about: " + weatherSummary + "without a headline for the summary" +
                 " Also, give packing advice based on this weather. Do not list in numbers and the text should not contain" +
                 "special letters nor signs" +
                 "I want headlines like, Layers, outerwear, sun protection and footwear" +
-                "remove this headline: Packing Advice";
+                "these headlines should be on a seperate line" +
+                "remove this headline: Packing Advice" ;
 
         RequestDTO requestDTO = new RequestDTO();
         requestDTO.setModel("mistral-small-latest");
