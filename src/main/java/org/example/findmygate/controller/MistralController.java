@@ -3,12 +3,10 @@ import org.example.findmygate.service.MistralService;
 import org.example.findmygate.service.WeatherService;
 import org.example.findmygate.weatherdto.WeatherRequestDTO;
 import org.example.findmygate.weatherdto.WeatherResponseDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Mono;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -38,4 +36,5 @@ public class MistralController {
         result.put("ai", mistralResponse);
         return result;
     }
+
 }

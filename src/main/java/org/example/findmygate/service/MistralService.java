@@ -48,13 +48,14 @@ public class MistralService {
         lstMessages.add(new Message("system", "You are a helpful assistant."));
         lstMessages.add(new Message("user", userPrompt));
         requestDTO.setMessages(lstMessages);
+
         ResponseDTO response = webClient.post()
-                .contentType(MediaType.APPLICATION_JSON)
-                .headers(h -> h.setBearerAuth(openapikey))
-                .bodyValue(requestDTO)
-                .retrieve()
-                .bodyToMono(ResponseDTO.class)
-                .block();
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .headers(h -> h.setBearerAuth(openapikey))
+                    .bodyValue(requestDTO)
+                    .retrieve()
+                    .bodyToMono(ResponseDTO.class)
+                    .block();
 
         List<Choice> lst = response.getChoices();
         Usage usg = response.getUsage();

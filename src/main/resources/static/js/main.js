@@ -22,6 +22,23 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const data = await response.json();
+            // ---- SPLIT AI TEXT ----
+            let aiText = "No AI packing advice available.";
+            if (data.ai && data.ai.Choices && data.ai.Choices.length > 0 && data.ai.Choices[0].message && data.ai.Choices[0].message.content) {
+                aiText = data.ai.Choices[0].message.content
+            }
+
+            let index = aiText.indexOf("Layers")
+            let aiSummary = ""
+            let aiPackage = ""
+
+            if(index !== -1){
+                aiSummary = aiText.substring(0, index).trim() //alt før "Layers"
+                aiPackage = aiText.substring(index).trim() //alt efter "Layers"
+            } else {
+                aiSummary = aiText;
+                aiPackage = "Error - no package list"
+            }
 
             // ---- WEATHER SECTION ----
             const weather = data.weather;
@@ -36,18 +53,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 weatherSection.innerHTML =
                     '<h2>Weather in ' + location.name + ', ' + location.country + '</h2>' +
-                    '<p><strong>' + current.temperature + '°C</strong>, ' + current.weather_descriptions.join(", ") + '</p>' +
-                    iconHTML;
+                    '<p><strong>' + current.temperature + '°C</strong>, ' + current.weather_descriptions.join(", ") + '</p>' + '<br>' +
+                    iconHTML + '<br><br>>' + aiSummary;
             } else {
                 weatherSection.innerHTML = "<p>No weather data available.</p>";
             }
-
             // ---- PACKING SECTION ----
-            let aiText = "No AI packing advice available.";
-            if (data.ai && data.ai.Choices && data.ai.Choices.length > 0 && data.ai.Choices[0].message && data.ai.Choices[0].message.content) {
-                aiText = data.ai.Choices[0].message.content;
-            }
-            packingSection.innerHTML = '<h2>Packing Advice</h2><p>' + aiText.replace(/\n/g, "<br>") + '</p>'; //erstatter alle /n med linjeskift
+            packingSection.innerHTML = '<h2>Packing Advice</h2><p>' + aiPackage.replace(/\n/g, "<br>") + '</p>'; //erstatter alle /n med linjeskift
 
         } catch (error) {
             console.error(error);
