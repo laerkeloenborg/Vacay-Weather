@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 weatherSection.innerHTML =
                     '<h2>Weather in ' + location.name + ', ' + location.country + '</h2>' +
                     '<p><strong>' + current.temperature + '°C</strong>, ' + current.weather_descriptions.join(", ") + '</p>' + '<br>' +
-                    iconHTML + '<br><br>>' + aiSummary;
+                    iconHTML + '<br><br>' + aiSummary;
             } else {
                 weatherSection.innerHTML = "<p>No weather data available.</p>";
             }
