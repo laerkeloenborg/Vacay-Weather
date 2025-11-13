@@ -51,25 +51,13 @@ public class MistralService {
         lstMessages.add(new Message("user", userPrompt));
         requestDTO.setMessages(lstMessages);
 
-        ResponseDTO response;
-        try {
-            response = webClient.post()
+        ResponseDTO response = webClient.post()
                     .contentType(MediaType.APPLICATION_JSON)
                     .headers(h -> h.setBearerAuth(openapikey))
                     .bodyValue(requestDTO)
                     .retrieve()
                     .bodyToMono(ResponseDTO.class)
                     .block();
-        }catch(WebClientResponseException e){
-            Map<String, Object> errorMap = new HashMap<>();
-            errorMap.put("error", "Mistral API returned status " + e.getStatusCode());
-            errorMap.put("body", e.getResponseBodyAsString());
-            return errorMap;
-        }catch (Exception e){
-            Map<String, Object> errorMap = new HashMap<>();
-            errorMap.put("error", e.getMessage());
-            return errorMap;
-        }
 
         List<Choice> lst = response.getChoices();
         Usage usg = response.getUsage();

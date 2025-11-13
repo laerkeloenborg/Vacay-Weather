@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 aiPackage = "Error - no package list"
             }
 
-            console.log(data.ai)
             // ---- WEATHER SECTION ----
             const weather = data.weather;
             if (weather && weather.location && weather.current) {
@@ -54,8 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 weatherSection.innerHTML =
                     '<h2>Weather in ' + location.name + ', ' + location.country + '</h2>' +
-                    '<p><strong>' + current.temperature + '°C</strong>, ' + current.weather_descriptions.join(", ") + '</p>' +
-                    iconHTML + aiSummary;
+                    '<p><strong>' + current.temperature + '°C</strong>, ' + current.weather_descriptions.join(", ") + '</p>' + '<br>' +
+                    iconHTML + '<br><br>>' + aiSummary;
             } else {
                 weatherSection.innerHTML = "<p>No weather data available.</p>";
             }
